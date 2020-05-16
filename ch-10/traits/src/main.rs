@@ -1,13 +1,27 @@
 fn main() {
-    let tweet = Tweet {
+    let tweet = returns_summarizable();
+
+    println!("1 new tweet: {}", tweet.summarize());
+
+    notify(tweet);
+}
+
+pub fn notify<T: Summary>(item: T) {
+    println!("Breaking news! {}", item.summarize());
+}
+
+fn returns_summarizable() -> impl Summary {
+    Tweet {
         username: "horse_ebooks".to_string(),
         content: "of course, as you probably already know, people".to_string(),
         reply: false,
         retweet: false,
-    };
-
-    println!("1 new tweet: {}", tweet.summarize());
+    }
 }
+
+// pub fn notify(item: impl Summary) {
+//     println!("Breaking news! {}", item.summarize());
+// }
 
 pub trait Summary {
     fn summarize(&self) -> String;
